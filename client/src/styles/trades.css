@@ -1,0 +1,28 @@
+.trade-status-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.trade-status-options label{display:flex;align-items:flex-start;gap:9px;border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer}
+.trade-status-options label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.trade-status-options input{margin-top:4px}
+.trade-status-options span{display:grid;gap:2px}
+.trade-status-options small{color:var(--muted)}
+.trade-form-heading{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:10px 0 14px}
+.sale-fields{border-top:1px solid var(--border);padding-top:16px}
+.trade-details{margin:0}
+.trade-details>div{display:flex;justify-content:space-between;gap:20px;padding:9px 0;border-bottom:1px solid var(--border)}
+.trade-details dt{color:var(--muted);font-weight:500}
+.trade-details dd{margin:0;font-weight:700;text-align:right}
+.trade-notes{margin-top:18px}
+.trade-notes p{color:var(--muted);white-space:pre-wrap;margin:5px 0 0}
+.dashboard-actions{display:flex;align-items:center;gap:10px}
+.dashboard-date{display:flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--panel);padding:6px 10px;border-radius:8px}
+.dashboard-date input{border:0;outline:0;background:transparent;color:var(--text)}
+.goal-mini a{color:#fff;font-size:.72rem;margin-top:5px}
+.brand-copy{display:grid;line-height:1.05}
+.brand-copy strong{font-size:1.15rem}
+.brand-copy small{color:var(--muted);font-size:.52rem;font-weight:500;line-height:1.25;margin-top:4px;max-width:155px}
+@media(max-width:767px){
+ .mobile-brand{display:flex!important;align-items:center;gap:8px}
+ .mobile-brand:before{content:'\f673';font-family:'bootstrap-icons';width:31px;height:31px;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:.9rem}
+ .mobile-brand>span{display:grid;line-height:1}.mobile-brand strong{font-size:.92rem}.mobile-brand small{color:var(--muted);font-size:.46rem;margin-top:3px}
+ .dashboard-actions{align-items:flex-end;flex-direction:column}.dashboard-date{font-size:.72rem;padding:4px 7px}
+}
+@media(max-width:575px){.trade-status-options{grid-template-columns:1fr}}

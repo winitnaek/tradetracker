@@ -1,0 +1,1 @@
+export default function Placeholder({title,icon}){return <><div className="page-heading"><div><h1>{title}</h1><p>Your realized trading insights, without portfolio balance tracking</p></div></div><div className="card-panel empty-state"><i className={`bi bi-${icon}`}/><h2>{title}</h2><p>This view is ready for your trade data and reporting filters.</p></div></>}
