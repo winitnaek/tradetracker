@@ -24,3 +24,23 @@
 .provider-comparison strong{min-width:68px;text-align:right}
 @media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi.total-profit{grid-column:1/-1}}
 @media(max-width:767px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi.total-profit{grid-column:auto}.provider-chart-heading{display:grid}.provider-comparison strong{min-width:62px}}
+
+.mobile-more-backdrop,.mobile-more-sheet{display:none}
+@media(max-width:767px){
+ .mobile-nav button.active{color:var(--accent)}
+ .mobile-more-backdrop{display:block;position:fixed;inset:0;border:0;background:rgba(15,18,30,.48);z-index:40}
+ .mobile-more-sheet{display:block;position:fixed;inset:auto 0 0;background:var(--panel);color:var(--text);border-radius:20px 20px 0 0;padding:8px 18px calc(18px + env(safe-area-inset-bottom));max-height:calc(100vh - 44px);overflow:auto;z-index:41;box-shadow:0 -12px 35px rgba(15,18,30,.18)}
+ .mobile-more-handle{width:42px;height:4px;border-radius:4px;background:var(--border);margin:2px auto 14px}
+ .mobile-more-sheet header{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:11px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+ .mobile-more-sheet header .avatar{width:40px;height:40px}
+ .mobile-more-sheet header span{display:grid;min-width:0}
+ .mobile-more-sheet header small{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .mobile-more-sheet header button{border:0;background:transparent;color:var(--muted);padding:8px}
+ .mobile-more-sheet nav{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 0}
+ .mobile-more-sheet nav a{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:8px;min-height:52px;padding:10px 12px;border:1px solid var(--border);border-radius:11px;color:var(--text);text-decoration:none;font-weight:600;font-size:.82rem}
+ .mobile-more-sheet nav a>i:first-child{color:var(--accent);font-size:1rem}
+ .mobile-more-sheet nav a>i:last-child{color:var(--muted);font-size:.7rem}
+ .mobile-more-sheet nav a.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+ .mobile-signout{width:100%;border:1px solid #ef476f55;background:#ef476f12;color:var(--red);border-radius:11px;padding:12px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px}
+}
+@media(max-width:390px){.mobile-more-sheet nav{grid-template-columns:1fr}}
