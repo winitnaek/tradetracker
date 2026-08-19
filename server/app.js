@@ -12,8 +12,14 @@ const productionCsp = { directives: {
   fontSrc: [cspKeyword('self'), 'data:']
 } };
 const helmetOptions = process.env.NODE_ENV === 'production'
-  ? { contentSecurityPolicy: productionCsp }
-  : { contentSecurityPolicy: false };
+  ? {
+      contentSecurityPolicy: productionCsp,
+      crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' }
+    }
+  : {
+      contentSecurityPolicy: false,
+      crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' }
+    };
 const app = express(); app.set('trust proxy', 1); app.use(helmet(helmetOptions)); app.use(morgan('dev')); app.use(express.json());
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000', credentials: true }));
 app.use(session({ name: 'tradetracker.sid', secret: process.env.SESSION_SECRET || 'development-only-change-me', proxy: true, resave: false, saveUninitialized: false, store: process.env.MONGODB_URI ? MongoStore.create({ mongoUrl: process.env.MONGODB_URI }) : undefined, cookie: { httpOnly: true, sameSite: 'lax', secure: 'auto', maxAge: 7 * 86400000 } }));
