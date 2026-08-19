@@ -8,3 +8,9 @@
 @media(max-width:1100px){.analytics-grid{grid-template-columns:repeat(2,1fr)}.phase-two-column{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.report-filters{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:767px){.analytics-grid,.stats-grid,.report-filters{grid-template-columns:1fr 1fr}.calendar{padding:10px;overflow:auto}.calendar-week,.calendar-grid{min-width:620px}.calendar-grid>button,.calendar-grid>i{min-height:78px}.phase-chart{padding:14px}.ranking>div{grid-template-columns:1fr auto}.ranking>div span{display:none}}
 @media(max-width:480px){.analytics-grid,.stats-grid,.report-filters{grid-template-columns:1fr}.metric-card,.stat-detail{padding:16px}.setting-row{align-items:flex-start}}
+
+.kpi-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+.kpi.total-profit:after{background:#8b5cf6}
+.kpi.total-profit strong{color:var(--green)}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi.total-profit{grid-column:1/-1}}
+@media(max-width:767px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi.total-profit{grid-column:auto}}

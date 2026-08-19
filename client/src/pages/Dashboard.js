@@ -19,7 +19,8 @@ export default function Dashboard(){
   [currentDay?'TODAY’S PROFIT':'SELECTED DAY PROFIT',money(data.profit),`Target: ${money(data.goal)}`,'profit'],
   ['REMAINING TO TARGET',money(data.remaining),data.remaining===0?'Target Reached! 🎉':`${money(data.remaining)} Remaining`,'remaining'],
   ['TARGET ACHIEVED',`${data.targetPercentage.toFixed(2)}%`,'Daily Goal Progress','achieved'],
-  [currentDay?'TRADES TODAY':'TRADES THAT DAY',data.tradesToday,`${data.wins} Wins / ${data.losses} Loss`,'trades']
+  [currentDay?'TRADES TODAY':'TRADES THAT DAY',data.tradesToday,`${data.wins} Wins / ${data.losses} Loss`,'trades'],
+  ['TOTAL PROFIT',money(data.totalProfit),'All-time realized profit','total-profit']
  ];
  return <>
   <div className={'page-heading'}><div><h1>Dashboard</h1><p>Track your trades and daily profit goals</p></div><div className={'dashboard-actions'}><InputDate value={selectedDate} max={today()} onChange={setSelectedDate}/><button className={'btn btn-primary'} onClick={openAddTrade}><i className={'bi bi-plus-lg'}/> Add Trade</button></div></div>
