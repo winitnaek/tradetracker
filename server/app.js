@@ -1,7 +1,20 @@
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 const express = require('express'); const session = require('express-session'); const MongoStore = require('connect-mongo');
 const cors = require('cors'); const helmet = require('helmet'); const morgan = require('morgan'); const auth = require('./middleware/auth');
-const app = express(); app.set('trust proxy', 1); app.use(helmet()); app.use(morgan('dev')); app.use(express.json());
+const cspKeyword = value => String.fromCharCode(39) + value + String.fromCharCode(39);
+const productionCsp = { directives: {
+  defaultSrc: [cspKeyword('self')],
+  scriptSrc: [cspKeyword('self'), 'https://accounts.google.com'],
+  frameSrc: [cspKeyword('self'), 'https://accounts.google.com'],
+  connectSrc: [cspKeyword('self'), 'https://accounts.google.com'],
+  styleSrc: [cspKeyword('self'), cspKeyword('unsafe-inline'), 'https://accounts.google.com'],
+  imgSrc: [cspKeyword('self'), 'data:', 'https://*.googleusercontent.com'],
+  fontSrc: [cspKeyword('self'), 'data:']
+} };
+const helmetOptions = process.env.NODE_ENV === 'production'
+  ? { contentSecurityPolicy: productionCsp }
+  : { contentSecurityPolicy: false };
+const app = express(); app.set('trust proxy', 1); app.use(helmet(helmetOptions)); app.use(morgan('dev')); app.use(express.json());
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000', credentials: true }));
 app.use(session({ name: 'tradetracker.sid', secret: process.env.SESSION_SECRET || 'development-only-change-me', proxy: true, resave: false, saveUninitialized: false, store: process.env.MONGODB_URI ? MongoStore.create({ mongoUrl: process.env.MONGODB_URI }) : undefined, cookie: { httpOnly: true, sameSite: 'lax', secure: 'auto', maxAge: 7 * 86400000 } }));
 app.get('/api/health', (_req, res) => res.json({ success: true })); app.use('/api/auth', require('./routes/auth'));
