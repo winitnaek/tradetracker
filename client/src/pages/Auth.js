@@ -38,7 +38,7 @@ export default function Auth({ register = false }) {
       {!process.env.HIDE_GOOGLE_AUTH && (process.env.GOOGLE_CLIENT_ID
         ? <div className={'google-login-wrap'}><GoogleLogin onSuccess={handleGoogleSuccess} onError={() => setError('Google Sign-In was cancelled or could not be completed.')} width={'400'} /></div>
         : <div className={'alert alert-warning'}>Google Sign-In is not configured.</div>)}
-      {!process.env.HIDE_GOOGLE_AUTH&&<div className={'divider'}><span>or continue with email</span></div>}
+      {!process.env.HIDE_GOOGLE_AUTH&&process.env.GOOGLE_CLIENT_ID&&<div className={'divider'}><span>or continue with email</span></div>}
       <form onSubmit={submit}>
         {register && <label>Display name<input required value={form.displayName} onChange={e => setForm({ ...form, displayName: e.target.value })} placeholder={'Your name'} /></label>}
         <label>Email address<input required type={'email'} value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder={'you@example.com'} /></label>
