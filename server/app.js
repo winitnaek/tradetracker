@@ -24,6 +24,7 @@ const app = express(); app.set('trust proxy', 1); app.use(helmet(helmetOptions))
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000', credentials: true }));
 app.use(session({ name: 'tradetracker.sid', secret: process.env.SESSION_SECRET || 'development-only-change-me', proxy: true, resave: false, saveUninitialized: false, store: process.env.MONGODB_URI ? MongoStore.create({ mongoUrl: process.env.MONGODB_URI }) : undefined, cookie: { httpOnly: true, sameSite: 'lax', secure: 'auto', maxAge: 7 * 86400000 } }));
 app.get('/api/health', (_req, res) => res.json({ success: true })); app.use('/api/auth', require('./routes/auth'));
+app.use('/api/dividends', auth, require('./routes/dividends'));
 app.use('/api/trades', auth, require('./routes/trades')); app.use('/api/goals', auth, require('./routes/goals')); app.use('/api/dashboard', auth, require('./routes/dashboard')); app.use('/api/providers', auth, require('./routes/providers'));
 app.use('/api/reports',auth,require('./routes/reports'));app.use('/api/settings',auth,require('./routes/settings'));
 const path = require('path');

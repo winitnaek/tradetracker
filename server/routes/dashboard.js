@@ -2,6 +2,7 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const Trade = require('../models/Trade');
 const Goal = require('../models/Goal');
+const Dividend = require('../models/Dividend');
 const { dateKey, dayBounds } = require('../utils/dates');
 function trendStart(period, selected, dayStart) {
   if (period === '7D') return new Date(dayStart.getTime() - 6 * 86400000);
@@ -34,10 +35,13 @@ router.get('/', async (req, res) => {
       { $sort: { value: -1 } }
     ])
   ]);
+  const dividendRows = await Dividend.aggregate([{ $match: { userId } }, { $group: { _id: null, total: { $sum: '$amount' } } }]);
+  const dividendProfit = Math.round((dividendRows[0]?.total || 0) * 100) / 100;
+  const tradingProfit = totalProfitRows[0]?.totalProfit || 0;
   const goal = goalDoc?.dailyProfitTarget ?? 50; const profit = todayTrades.reduce((sum, trade) => sum + trade.realizedProfit, 0);
   const providers = Object.values(todayTrades.reduce((map, trade) => { map[trade.provider] ||= { name: trade.provider, value: 0 }; map[trade.provider].value += trade.realizedProfit; return map; }, {})).map(provider => ({ ...provider, chartValue: Math.abs(provider.value) }));
   const periodProviders = periodProviderRows.map(provider => ({ name: provider._id, value: provider.value, chartValue: Math.abs(provider.value) }));
   const periodProfit = periodProviders.reduce((sum, provider) => sum + provider.value, 0);
-  res.json({ success: true, data: { selectedDate: selectedKey, period, goal, profit, totalProfit: totalProfitRows[0]?.totalProfit || 0, periodProfit, remaining: Math.max(goal - profit, 0), targetPercentage: goal > 0 ? profit / goal * 100 : 0, tradesToday: todayTrades.length, wins: todayTrades.filter(trade => trade.realizedProfit > 0).length, losses: todayTrades.filter(trade => trade.realizedProfit < 0).length, providers, periodProviders, recentTrades, trend: completeTrend(trendRows, rangeStart, end) } });
+  res.json({ success: true, data: { selectedDate: selectedKey, period, goal, profit, tradingProfit, dividendProfit, totalProfit: Math.round((tradingProfit + dividendProfit) * 100) / 100, periodProfit, remaining: Math.max(goal - profit, 0), targetPercentage: goal > 0 ? profit / goal * 100 : 0, tradesToday: todayTrades.length, wins: todayTrades.filter(trade => trade.realizedProfit > 0).length, losses: todayTrades.filter(trade => trade.realizedProfit < 0).length, providers, periodProviders, recentTrades, trend: completeTrend(trendRows, rangeStart, end) } });
 });
 module.exports = router;
